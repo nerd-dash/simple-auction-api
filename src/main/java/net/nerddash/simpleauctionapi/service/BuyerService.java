@@ -20,7 +20,7 @@ import net.nerddash.simpleauctionapi.model.Role;
 import net.nerddash.simpleauctionapi.repository.BuyerRepository;
 
 @Service
-public class BuyerService extends ApiServiceImpl<Buyer, BuyerRepository> implements ApiService<Buyer> {
+public class BuyerService extends ApiServiceImpl<Buyer, BuyerRepository> {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;

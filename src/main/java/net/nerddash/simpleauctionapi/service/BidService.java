@@ -19,7 +19,7 @@ import net.nerddash.simpleauctionapi.repository.BidRepository;
 import net.nerddash.simpleauctionapi.repository.BuyerRepository;
 
 @Service
-public class BidService extends ApiServiceImpl<Bid, BidRepository> implements ApiService<Bid> {
+public class BidService extends ApiServiceImpl<Bid, BidRepository>  {
 
 	@Autowired
 	private BuyerRepository buyerRepository; 

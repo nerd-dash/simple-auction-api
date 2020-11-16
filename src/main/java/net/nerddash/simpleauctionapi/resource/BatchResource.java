@@ -13,32 +13,30 @@ import net.nerddash.simpleauctionapi.model.Age;
 import net.nerddash.simpleauctionapi.model.Auction;
 import net.nerddash.simpleauctionapi.model.Batch;
 import net.nerddash.simpleauctionapi.model.Race;
-import net.nerddash.simpleauctionapi.repository.AgeRepository;
-import net.nerddash.simpleauctionapi.repository.AuctionRepository;
-import net.nerddash.simpleauctionapi.repository.BatchRepository;
-import net.nerddash.simpleauctionapi.repository.RaceRepository;
+import net.nerddash.simpleauctionapi.service.AgeService;
+import net.nerddash.simpleauctionapi.service.AuctionService;
 import net.nerddash.simpleauctionapi.service.BatchService;
+import net.nerddash.simpleauctionapi.service.RaceService;
 
 @RestController
 @RequestMapping("/batches")
-public class BatchResource extends ApiResourceImpl<Batch, BatchForm, BatchRepository, BatchService>
-		implements ApiResource<Batch, BatchForm> {
+public class BatchResource extends ApiResourceImpl<Batch, BatchForm, BatchService> {
 
 	@Autowired
-	AgeRepository ageRepository;
+	AgeService ageService;
 
 	@Autowired
-	AuctionRepository auctionRepository;
+	AuctionService auctionService;
 
 	@Autowired
-	RaceRepository raceRepository;
+	RaceService raceService;
 
 	@Override
 	public Batch formToEntity(BatchForm form) throws Exception {
-		
-		Optional<Age> age = ageRepository.findById(form.getAge());
-		Optional<Auction> auction = auctionRepository.findById(form.getAuction());
-		Optional<Race> race = raceRepository.findById(form.getRace());
+
+		Optional<Age> age = ageService.findById(form.getAge());
+		Optional<Auction> auction = auctionService.findById(form.getAuction());
+		Optional<Race> race = raceService.findById(form.getRace());
 
 		if (age.isPresent() && auction.isPresent() && race.isPresent()) {
 
@@ -48,8 +46,8 @@ public class BatchResource extends ApiResourceImpl<Batch, BatchForm, BatchReposi
 			entity.setRace(race.get());
 			return entity;
 		}
-		
+
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 	}
-	
+
 }

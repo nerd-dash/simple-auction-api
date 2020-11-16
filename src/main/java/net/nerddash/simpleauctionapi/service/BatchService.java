@@ -10,7 +10,7 @@ import net.nerddash.simpleauctionapi.model.Batch;
 import net.nerddash.simpleauctionapi.repository.BatchRepository;
 
 @Service
-public class BatchService extends ApiServiceImpl<Batch, BatchRepository> implements ApiService<Batch> {
+public class BatchService extends ApiServiceImpl<Batch, BatchRepository>  {
 
 	@Override
 	public BatchDTO entityToDto(Batch batch) {

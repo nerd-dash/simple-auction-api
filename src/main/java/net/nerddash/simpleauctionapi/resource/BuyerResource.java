@@ -17,13 +17,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import net.nerddash.simpleauctionapi.dto.BuyerForm;
 import net.nerddash.simpleauctionapi.dto.DTO;
 import net.nerddash.simpleauctionapi.model.Buyer;
-import net.nerddash.simpleauctionapi.repository.BuyerRepository;
 import net.nerddash.simpleauctionapi.service.BuyerService;
 
 @RestController
 @RequestMapping("/buyers")
-public class BuyerResource extends ApiResourceImpl<Buyer, BuyerForm, BuyerRepository, BuyerService>
-		implements ApiResource<Buyer, BuyerForm> {
+public class BuyerResource extends ApiResourceImpl<Buyer, BuyerForm, BuyerService> {
 
 	@Override
 	@GetMapping("/{id}")
@@ -31,7 +29,7 @@ public class BuyerResource extends ApiResourceImpl<Buyer, BuyerForm, BuyerReposi
 	public ResponseEntity<? extends DTO<Buyer>> read(@PathVariable Long id) throws Exception {
 		return super.read(id);
 	}
-	
+
 	@Override
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")

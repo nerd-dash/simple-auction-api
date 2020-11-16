@@ -10,7 +10,7 @@ import net.nerddash.simpleauctionapi.model.Race;
 import net.nerddash.simpleauctionapi.repository.RaceRepository;
 
 @Service
-public class RaceService extends ApiServiceImpl<Race, RaceRepository> implements ApiService<Race> {
+public class RaceService extends ApiServiceImpl<Race, RaceRepository> {
 
 	@Override
 	public RaceDTO entityToDto(Race race) {

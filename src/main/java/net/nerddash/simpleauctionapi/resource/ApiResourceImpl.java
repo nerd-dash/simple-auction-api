@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +29,11 @@ import net.nerddash.simpleauctionapi.dto.Form;
 import net.nerddash.simpleauctionapi.model.ApiEntity;
 import net.nerddash.simpleauctionapi.service.ApiService;
 
-public abstract class ApiResourceImpl<E extends ApiEntity, F extends Form<E>, R extends JpaRepository<E, Long>, S extends ApiService<E>>
+public abstract class ApiResourceImpl<E extends ApiEntity, F extends Form<E>, S extends ApiService<E>>
 		implements ApiResource<E, F> {
 
 	@Autowired
 	protected S service;
-
-	@Autowired
-	protected R repository;
 
 	@Override
 	public String controllerPath() {
@@ -62,9 +58,9 @@ public abstract class ApiResourceImpl<E extends ApiEntity, F extends Form<E>, R 
 	}
 
 	@GetMapping("/{id}")
-	@PreAuthorize("permitAll()")	
+	@PreAuthorize("permitAll()")
 	public ResponseEntity<? extends DTO<E>> read(@PathVariable Long id) throws Exception {
-		Optional<E> optional = repository.findById(id);
+		Optional<E> optional = service.findById(id);
 
 		if (optional.isPresent() && service.shouldRead(optional.get())) {
 			return ResponseEntity.ok(service.entityToDto(optional.get()));
@@ -77,11 +73,12 @@ public abstract class ApiResourceImpl<E extends ApiEntity, F extends Form<E>, R 
 	@PostMapping
 	@Transactional
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<? extends DTO<E>> create(@Valid @RequestBody F form, UriComponentsBuilder uriBuilder) throws Exception {
+	public ResponseEntity<? extends DTO<E>> create(@Valid @RequestBody F form, UriComponentsBuilder uriBuilder)
+			throws Exception {
 		E entity = formToEntity(form);
 		if (entity != null) {
 			E valid = service.validate(entity);
-			E saved = repository.save(valid);
+			E saved = service.save(valid);
 			URI uri = uriBuilder.path(controllerPath() + "/{id}").buildAndExpand(saved.getId()).toUri();
 			return ResponseEntity.created(uri).body(service.entityToDto(saved));
 		}
@@ -93,7 +90,7 @@ public abstract class ApiResourceImpl<E extends ApiEntity, F extends Form<E>, R 
 	@Transactional
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<? extends DTO<E>> update(@PathVariable Long id, @Valid @RequestBody F form) throws Exception {
-		Optional<E> optional = repository.findById(id);
+		Optional<E> optional = service.findById(id);
 
 		if (optional.isPresent() && service.shouldUpdate(optional.get())) {
 			E entity = form.updateEntity(optional.get());
@@ -107,13 +104,12 @@ public abstract class ApiResourceImpl<E extends ApiEntity, F extends Form<E>, R 
 	@DeleteMapping("/{id}")
 	@Transactional
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<E> delete(@PathVariable Long id) {
 
-		Optional<E> optional = repository.findById(id);
+		Long deletedId = this.service.delete(id);
 
-		if (optional.isPresent()) {
+		if (deletedId != null) {
 
-			repository.deleteById(id);
 			return ResponseEntity.ok().build();
 
 		}

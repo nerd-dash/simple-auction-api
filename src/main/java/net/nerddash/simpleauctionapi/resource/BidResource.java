@@ -12,27 +12,25 @@ import net.nerddash.simpleauctionapi.dto.BidForm;
 import net.nerddash.simpleauctionapi.model.Batch;
 import net.nerddash.simpleauctionapi.model.Bid;
 import net.nerddash.simpleauctionapi.model.Buyer;
-import net.nerddash.simpleauctionapi.repository.BatchRepository;
-import net.nerddash.simpleauctionapi.repository.BidRepository;
-import net.nerddash.simpleauctionapi.repository.BuyerRepository;
+import net.nerddash.simpleauctionapi.service.BatchService;
 import net.nerddash.simpleauctionapi.service.BidService;
+import net.nerddash.simpleauctionapi.service.BuyerService;
 
 @RestController
 @RequestMapping("/bids")
-public class BidResource extends ApiResourceImpl<Bid, BidForm, BidRepository, BidService>
-		implements ApiResource<Bid, BidForm> {
+public class BidResource extends ApiResourceImpl<Bid, BidForm, BidService> {
 
 	@Autowired
-	BatchRepository batchRepository;
+	BatchService batchService;
 
 	@Autowired
-	BuyerRepository buyerRepository;
+	BuyerService buyerService;
 
 	@Override
 	public Bid formToEntity(BidForm form) {
 
-		Optional<Batch> batch = batchRepository.findById(form.getBatch());
-		Optional<Buyer> buyer = buyerRepository.findById(form.getBuyer());
+		Optional<Batch> batch = batchService.findById(form.getBatch());
+		Optional<Buyer> buyer = buyerService.findById(form.getBuyer());
 
 		if (batch.isPresent() && buyer.isPresent()) {
 

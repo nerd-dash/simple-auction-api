@@ -9,7 +9,7 @@ import net.nerddash.simpleauctionapi.model.Age;
 import net.nerddash.simpleauctionapi.repository.AgeRepository;
 
 @Service
-public class AgeService extends ApiServiceImpl<Age, AgeRepository> implements ApiService<Age> {
+public class AgeService extends ApiServiceImpl<Age, AgeRepository>{
 
 	@Override
 	public Page<AgeDTO> listAllDTO(Pageable pageable) {
