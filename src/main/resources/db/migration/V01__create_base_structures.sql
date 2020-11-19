@@ -88,23 +88,5 @@ ALTER TABLE buyers_profiles ADD FOREIGN KEY (profiles_id) REFERENCES profiles(id
 ALTER TABLE buyers_profiles ADD FOREIGN KEY (buyer_id) REFERENCES buyers(id) ON DELETE CASCADE ;
 
 
-INSERT INTO races (name) values ('Nelorado');
-INSERT INTO races (name) values ('Cruzado');
-INSERT INTO races (name) values ('Nelore');
-INSERT INTO races (name) values ('Cruzamento Industrial');
-INSERT INTO races (name) values ('Holandês');
-INSERT INTO races (name) values ('Guzerá');
 
-INSERT INTO ages (from_months,to_months) values (0,12);
-INSERT INTO ages (from_months,to_months) values (13,24);
-INSERT INTO ages (from_months,to_months) values (25,36);
-INSERT INTO ages (from_months,to_months) values (36,-1);
-
-INSERT INTO auction_api.buyers (name,phone_number,phone_number_crypt,farm_name,enable,gta_full_name,gta_cpf_cnpj,gta_address,gta_neighborhood,gta_zip,gta_county,gta_phone_number,gta_state_inscrition,created_at,updated_at) VALUES 
-('Jader Barcelos','+5543839681719','$2y$10$8j9ubrpRwSi9GNa4o.l5veB9/zCTFuwFWOAEzthmIa2O4qVU6hsnC','Instância Barcelos',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2020-05-19 19:25:45.000','2020-05-19 19:25:45.000');
-
-INSERT INTO auction_api.profiles (role) VALUES ('ROLE_BUYER'),('ROLE_ADMIN');
-
-INSERT INTO auction_api.buyers_profiles (buyer_id,profiles_id) VALUES (1,2);
-INSERT INTO auction_api.buyers_profiles (buyer_id,profiles_id) VALUES (1,1);
 

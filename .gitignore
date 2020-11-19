@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Removing sensible data ###
+*.gitignore.sql
+**/src/main/**/*.gitingore.*
