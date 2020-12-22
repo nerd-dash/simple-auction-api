@@ -1,2 +1,2 @@
 # simple-auction-api
-A simple api to cattle auciton.
+A simple api to cattle auction.
