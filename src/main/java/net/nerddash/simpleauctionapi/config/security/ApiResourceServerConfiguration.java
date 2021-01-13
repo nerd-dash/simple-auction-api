@@ -28,8 +28,9 @@ public class ApiResourceServerConfiguration extends ResourceServerConfigurerAdap
 		.antMatchers(HttpMethod.GET, "/ages/*").permitAll()
 		.antMatchers(HttpMethod.GET, "/races/*").permitAll()
 		.antMatchers(HttpMethod.GET, "/auctions/*").permitAll()
-		.antMatchers(HttpMethod.GET, "/batches/*").permitAll()
-		.anyRequest().permitAll().and().csrf().disable()
+		.antMatchers(HttpMethod.GET, "/batches/*").permitAll()		
+		.anyRequest().permitAll()
+		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	}
